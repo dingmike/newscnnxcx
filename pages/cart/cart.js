@@ -40,6 +40,7 @@ Page({
   getCartList: function () {
     let that = this;
     util.request(api.CartList).then(function (res) {
+      debugger
       if (res.errno === 0) {
         console.log(res.data);
         that.setData({
@@ -67,7 +68,7 @@ Page({
     let itemIndex = event.target.dataset.itemIndex;
     let that = this;
 
-    if (!this.data.isEditCart) {
+    if (!that.data.isEditCart) {
       util.request(api.CartChecked, { productIds: that.data.cartGoods[itemIndex].product_id, isChecked: that.data.cartGoods[itemIndex].checked ? 0 : 1 }, 'POST').then(function (res) {
         if (res.errno === 0) {
           console.log(res.data);

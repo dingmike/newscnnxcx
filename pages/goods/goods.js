@@ -354,5 +354,73 @@ Page({
         this.setData({
             number: this.data.number + 1
         });
-    }
+    },
+    // 立即购买
+    checkoutOrder: function () {
+        //获取已选择的商品
+        let that = this;
+        // var addressId = wx.getStorageSync('addressId');
+        if (this.data.openAttr === false) {
+            //打开规格选择窗口
+            this.setData({
+                openAttr: !this.data.openAttr
+            });
+        } else {
+
+            //提示选择完整规格
+            if (!this.isCheckedAllSpec()) {
+                wx.showToast({
+                    image: '/static/images/icon_error.png',
+                    title: '请选择规格',
+                    mask: true
+                });
+                return false;
+            }
+
+            //根据选中的规格，判断是否有对应的sku信息
+            let checkedProduct = this.getCheckedProductItem(this.getCheckedSpecKey());
+            if (!checkedProduct || checkedProduct.length <= 0) {
+                //找不到对应的product信息，提示没有库存
+                wx.showToast({
+                    image: '/static/images/icon_error.png',
+                    title: '库存不足',
+                    mask: true
+                });
+                return false;
+            }
+
+            //验证库存
+            if (checkedProduct.goods_number < this.data.number) {
+                //找不到对应的product信息，提示没有库存
+                wx.showToast({
+                    image: '/static/images/icon_error.png',
+                    title: '库存不足',
+                    mask: true
+                });
+                return false;
+            }
+        }
+
+        //--------------
+       /* var checkedGoods = this.data.cartGoods.filter(function (element, index, array) {
+            if (element.checked == true) {
+                return true;
+            } else {
+                return false;
+            }
+        });*/
+        var checkedGoods = function (){
+            var that= this;
+            if (this.data) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+        wx.navigateTo({
+            url: '../shopping/checkout/checkout'
+        })
+    },
 })

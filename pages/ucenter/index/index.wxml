@@ -1,10 +1,14 @@
 <view class="container">
-  <view class="profile-info" bindtap="goLogin">
+  <view class="profile-info" >
     <image class="avatar" src="{{userInfo.avatar}}"></image>
     <view class="info">
       <text class="name">{{userInfo.nickname}}</text>
       <!-- <text class="level">{{userInfo.username}}</text> -->
     </view>
+    <view>
+      <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="goLogin">登录</button>
+    </view>
+
   </view>
 
   <view class="user-menu">

@@ -19,7 +19,7 @@ function formatNumber(n) {
 }
 
 /**
- * 封封微信的的request
+ * 封装微信的的request
  */
 function request(url, data = {}, method = "GET") {
   return new Promise(function (resolve, reject) {
@@ -32,6 +32,7 @@ function request(url, data = {}, method = "GET") {
         'X-Nideshop-Token': wx.getStorageSync('token')
       },
       success: function (res) {
+        debugger
         console.log("success");
 
         if (res.statusCode == 200) {
@@ -44,6 +45,7 @@ function request(url, data = {}, method = "GET") {
               code = res.code;
               return getUserInfo();
             }).then((userInfo) => {
+              debugger
               //登录远程服务器
               request(api.AuthLoginByWeixin, { code: code, userInfo: userInfo }, 'POST').then(res => {
                 if (res.errno === 0) {
@@ -100,6 +102,7 @@ function login() {
   return new Promise(function (resolve, reject) {
     wx.login({
       success: function (res) {
+        debugger
         if (res.code) {
           //登录远程服务器
           console.log(res)
