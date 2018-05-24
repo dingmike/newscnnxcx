@@ -126,7 +126,7 @@ Page({
     deleteCart: function () {
         //获取已选择的商品
         let that = this;
-debugger
+
         util.request(api.CartDeleteBuyOne, {}, 'POST').then(function (res) {
             if (res.errno === 0) {
                 console.log(res.data);
