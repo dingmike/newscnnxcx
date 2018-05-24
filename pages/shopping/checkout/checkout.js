@@ -109,29 +109,17 @@ Page({
         // 页面显示
         wx.showLoading({
             title: '加载中...',
-        })
+        });
         this.getCheckoutInfo();
 
     },
     onHide: function () {
-        // 页面隐藏 删除立即购买的购物车信息
-        this.deleteCart();
+        // 页面隐藏
     },
     onUnload: function () {
         // 页面关闭
-        // 页面隐藏 删除立即购买的购物车信息
-        this.deleteCart();
 
-    },
-    deleteCart: function () {
-        //获取已选择的商品
-        let that = this;
 
-        util.request(api.CartDeleteBuyOne, {}, 'POST').then(function (res) {
-            if (res.errno === 0) {
-                console.log(res.data);
-            }
-        });
     },
     submitOrder: function () {
         if (this.data.addressId <= 0) {

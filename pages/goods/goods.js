@@ -178,7 +178,7 @@ Page({
                         'checkedSpecImg': obj.checkedImg
                     });
                 }
-            })
+            });
             this.setData({
                 'checkedSpecText': checkedValue.join('　'),
                 'checkedSpecImg': checkedNameValue.checkedImg
@@ -205,7 +205,7 @@ Page({
             id: parseInt(options.id)
             // id: 1181000
         });
-        var that = this;
+        let that = this;
         this.getGoodsInfo();
         util.request(api.CartGoodsCount).then(function (res) {
             if (res.errno === 0) {
@@ -218,7 +218,8 @@ Page({
     },
     onReady: function () {
         // 页面渲染完成
-
+        // 页面隐藏 删除立即购买的购物车信息
+        this.deleteCart();
     },
     onShow: function () {
         // 页面显示
@@ -230,7 +231,6 @@ Page({
     },
     onUnload: function () {
         // 页面关闭
-
     },
     switchAttrPop: function () {
         if (this.data.openAttr == false) {
@@ -276,7 +276,7 @@ Page({
         });
     },
     addToCart: function () {
-        var that = this;
+        let that = this;
         if (this.data.openAttr === false) {
             //打开规格选择窗口
             this.setData({
@@ -438,5 +438,16 @@ Page({
         wx.navigateTo({
             url: '../shopping/checkout/checkout'
         })*/
+    },
+
+    // 删除购物车中的立即购买商品
+    deleteCart: function () {
+        //获取已选择的商品
+        let that = this;
+        util.request(api.CartDeleteBuyOne, {}, 'POST').then(function (res) {
+            if (res.errno === 0) {
+                console.log('delete successful');
+            }
+        });
     },
 })
