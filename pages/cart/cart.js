@@ -214,6 +214,8 @@ Page({
 
   },
   checkoutOrder: function () {
+
+     wx.setStorageSync('buyOne', 0);
     //获取已选择的商品
     let that = this;
 

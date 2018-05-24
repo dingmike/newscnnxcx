@@ -19,7 +19,7 @@ Page({
         userHasCollect: 0,
         number: 1,
         checkedSpecText: '请选择规格数量',
-        checkedSpecImg: '',
+        checkedSpecImg: '/static/images/cnnNoImg.jpg',
         openAttr: false,
         noCollectImage: "/static/images/icon_collect.png",
         hasCollectImage: "/static/images/icon_collect_checked.png",
@@ -356,7 +356,8 @@ Page({
         });
     },
     // 立即购买
-    checkoutOrder: function () {
+    buyOneCheck: function () {
+        wx.setStorageSync('buyOne', 1);
         //获取已选择的商品
         let that = this;
         // var addressId = wx.getStorageSync('addressId');
@@ -388,28 +389,43 @@ Page({
                 });
                 return false;
             }
+            //添加到购物车
+            util.request(api.CartAddOne, {
+                goodsId: this.data.goods.id,
+                number: this.data.number,
+                productId: checkedProduct[0].id,
+                buyOne: 1 // 立即购买
+            }, "POST")
+                .then(function (res) {
+                    let _res = res;
+                    if (_res.errno == 0) {
+                        wx.showToast({
+                            title: '添加成功'
+                        });
+                        var checkedGoods = function (){
+                            var that= this;
+                            if (this.data) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                        wx.navigateTo({
+                            url: '../shopping/checkout/checkout'
+                        })
+                    } else {
+                        wx.showToast({
+                            image: '/static/images/icon_error.png',
+                            title: _res.errmsg,
+                            mask: true
+                        });
+                    }
 
-            //验证库存
-            if (checkedProduct.goods_number < this.data.number) {
-                //找不到对应的product信息，提示没有库存
-                wx.showToast({
-                    image: '/static/images/icon_error.png',
-                    title: '库存不足',
-                    mask: true
                 });
-                return false;
-            }
+
         }
 
-        //--------------
-       /* var checkedGoods = this.data.cartGoods.filter(function (element, index, array) {
-            if (element.checked == true) {
-                return true;
-            } else {
-                return false;
-            }
-        });*/
-        var checkedGoods = function (){
+       /* var checkedGoods = function (){
             var that= this;
             if (this.data) {
                 return true;
@@ -421,6 +437,6 @@ Page({
 
         wx.navigateTo({
             url: '../shopping/checkout/checkout'
-        })
+        })*/
     },
 })
