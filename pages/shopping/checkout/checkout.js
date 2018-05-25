@@ -46,7 +46,7 @@ Page({
         let buyOne = wx.getStorageSync('buyOne');
         // wx.clearStorageSync()
         let that = this;
-        if (buyOne == 1) {
+        if (buyOne == 1) { // 立即购买只显示单个商品的订单
             util.request(api.Cartonecheck, {
                 addressId: that.data.addressId,
                 couponId: that.data.couponId
