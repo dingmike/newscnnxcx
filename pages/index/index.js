@@ -16,8 +16,8 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: 'NideShop',
-      desc: '仿网易严选微信小程序商城',
+      title: 'newscnn',
+      desc: 'newscnn fans shop',
       path: '/pages/index/index'
     }
   },
