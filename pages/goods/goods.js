@@ -242,7 +242,11 @@ Page({
     closeAttr: function () {
         this.setData({
             openAttr: false,
+            number: 1
         });
+        // 规格关闭 删除立即购买的购物车信息
+        this.deleteCart();
+
     },
     addCannelCollect: function () {
         let that = this;
@@ -276,6 +280,7 @@ Page({
         });
     },
     addToCart: function () {
+        wx.setStorageSync('buyOne', 0);
         let that = this;
         if (this.data.openAttr === false) {
             //打开规格选择窗口
@@ -364,7 +369,8 @@ Page({
         if (this.data.openAttr === false) {
             //打开规格选择窗口
             this.setData({
-                openAttr: !this.data.openAttr
+                openAttr: !this.data.openAttr,
+                number: 1,
             });
         } else {
 
