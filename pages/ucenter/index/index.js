@@ -37,7 +37,23 @@ Page({
   onUnload: function () {
     // 页面关闭
   },
-  goLogin(){
+  goLogin(res){
+
+    /*
+    * 新的引导用户微信验证登录可直接获取登录用户信息
+    * */
+    var detail = res.detail;
+    for (var key in detail){
+        console.log('handle call back:key: '+key+';value:' + detail[key])
+    }
+
+   /* this.setData({
+        userInfo: detail.userInfo
+    })
+      app.globalData.userInfo = detail.userInfo;
+      app.globalData.token = detail.token;
+
+*/
     user.loginByWeixin().then(res => {
       this.setData({
         userInfo: res.data.userInfo

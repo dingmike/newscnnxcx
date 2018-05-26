@@ -1,4 +1,7 @@
 {
   "enablePullDownRefresh": true,
-  "backgroundColor": "#fff"
+  "backgroundColor": "#fff",
+  "usingComponents": {
+    "wxc-toast": "../../packages/@minui/wxc-toast/dist/index"
+  }
 }

@@ -219,7 +219,7 @@ Page({
     onReady: function () {
         // 页面渲染完成
         // 页面隐藏 删除立即购买的购物车信息
-        this.deleteCart();
+        // this.deleteCart();
     },
     onShow: function () {
         // 页面显示

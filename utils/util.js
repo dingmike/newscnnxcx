@@ -39,8 +39,21 @@ function request(url, data = {}, method = "GET") {
 
           if (res.data.errno == 401) {
             //需要登录后才可以操作
+              wx.showModal({
+                  title: '提示',
+                  content: '先微信授权登录',
+                  success: function(res) {
+                      if (res.confirm) {
+                          wx.switchTab({
+                              url: '/pages/ucenter/index/index'
+                          });
+                      } else if (res.cancel) {
+                          wx.navigateBack({ changed: true })
+                      }
+                  }
+              })
 
-            let code = null;
+          /*  let code = null;
             return login().then((res) => {
               code = res.code;
               return getUserInfo();
@@ -62,7 +75,7 @@ function request(url, data = {}, method = "GET") {
               });
             }).catch((err) => {
               reject(err);
-            })
+            })*/
           } else {
             resolve(res.data);
           }
@@ -120,8 +133,14 @@ function login() {
 
 function getUserInfo() {
   return new Promise(function (resolve, reject) {
-    wx.getUserInfo({
-      withCredentials: true,
+    /*
+    *
+    * 当用户未授权过，调用该接口将直接报错
+    * 当用户授权过，可以使用该接口获取用户信息
+    *
+    * */
+    wx.getUserInfo({ //
+      withCredentials: true, // 是否带上登录态信息
       success: function (res) {
         console.log(res)
         resolve(res);
